@@ -26,7 +26,7 @@ class LaravelMonday
     {
         $result = $this->MondayBoard->customQuery($query);
 
-        if (is_null($result)) {
+        if (!$result) {
             throw new InvalidTokenException('Invalid token provided');
         }
 

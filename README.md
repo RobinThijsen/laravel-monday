@@ -11,10 +11,10 @@ First install the package via composer:
 composer require robinthijsen/laravel-monday
 ```
 
-Then you should install the package with the following command:
+(Optionally) You can publish the config file to change the default configuration. (You can also define the API token in the .env file
 
 ```bash
-php artisan laravel-monday:install
+php artisan vendor:publish --tag=monday-config
 ```
 
 This is the contents of the published config file: <br/>

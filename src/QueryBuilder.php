@@ -128,7 +128,7 @@ class QueryBuilder extends LaravelMonday
     public function ownersSubscribers(array $fields = MondayAccount::FIELDS): self
     {
         if (! str_contains($this->query, 'workspaces')) {
-            throw new ChainedNotAllowException('Chain ownersSubscribers() is only allowed on workspaces query.');
+            throw new ChainedNotAllowException('Chained method ownersSubscribers() is only allowed on workspaces query.');
         }
 
         $this->query .= 'owners_subscribers { '.implode(' ', $fields).' } ';
@@ -147,7 +147,7 @@ class QueryBuilder extends LaravelMonday
     public function usersSubscribers(array $fields = MondayAccount::FIELDS): self
     {
         if (! str_contains($this->query, 'workspaces')) {
-            throw new ChainedNotAllowException('Chain usersSubscribers() is only allowed on workspaces query.');
+            throw new ChainedNotAllowException('Chained method usersSubscribers() is only allowed on workspaces query.');
         }
 
         $this->query .= 'users_subscribers { '.implode(' ', $fields).' } ';
@@ -166,7 +166,7 @@ class QueryBuilder extends LaravelMonday
     public function blocks(array|string $attributes = MondayBlock::ARGUMENTS, array|string $fields = MondayBlock::FIELDS): self
     {
         if (! str_contains($this->query, 'docs')) {
-            throw new ChainedNotAllowException('Chain blocks() is only allowed on docs query.');
+            throw new ChainedNotAllowException('Chained method blocks() is only allowed on docs query.');
         }
 
         $this->query .= 'blocks (';
@@ -216,7 +216,7 @@ class QueryBuilder extends LaravelMonday
     public function owners(array $fields = MondayAccount::FIELDS): self
     {
         if (! str_contains($this->query, 'boards')) {
-            throw new ChainedNotAllowException('Chain owners() is only allowed on boards query.');
+            throw new ChainedNotAllowException('Chained method owners() is only allowed on boards query.');
         }
 
         $this->query .= 'owners { '.implode(' ', $fields).' } ';
@@ -235,7 +235,7 @@ class QueryBuilder extends LaravelMonday
     public function subscribers(array $fields = MondayAccount::FIELDS): self
     {
         if (! str_contains($this->query, 'boards')) {
-            throw new ChainedNotAllowException('Chain subscribers() is only allowed on boards query.');
+            throw new ChainedNotAllowException('Chained method subscribers() is only allowed on boards query.');
         }
 
         $this->query .= 'subscribers { '.implode(' ', $fields).' } ';
@@ -254,7 +254,7 @@ class QueryBuilder extends LaravelMonday
     public function columns(array $fields = MondayColumn::FIELDS): self
     {
         if (! str_contains($this->query, 'boards')) {
-            throw new ChainedNotAllowException('Chain columns() is only allowed on boards query.');
+            throw new ChainedNotAllowException('Chained method columns() is only allowed on boards query.');
         }
 
         $this->query .= 'columns { '.implode(' ', $fields).' } ';
@@ -273,7 +273,7 @@ class QueryBuilder extends LaravelMonday
     public function workspace(array $fields = MondayWorkspace::FIELDS): self
     {
         if (! str_contains($this->query, 'boards') || ! str_contains($this->query, 'docs')) {
-            throw new ChainedNotAllowException('Chain workspace() is only allowed on boards and docs query.');
+            throw new ChainedNotAllowException('Chained method workspace() is only allowed on boards and docs query.');
         }
 
         $this->query .= 'workspace { '.implode(' ', $fields).' } ';
@@ -292,7 +292,7 @@ class QueryBuilder extends LaravelMonday
     public function settings(): self
     {
         if (! str_contains($this->query, 'workspaces')) {
-            throw new ChainedNotAllowException('Chain settings() is only allowed on workspaces query.');
+            throw new ChainedNotAllowException('Chained method settings() is only allowed on workspaces query.');
         }
 
         $this->query .= 'settings { ';
@@ -311,7 +311,7 @@ class QueryBuilder extends LaravelMonday
     public function icon(array $fields = MondayIcon::FIELDS): self
     {
         if (! str_contains($this->query, 'settings') || ! str_contains($this->query, 'workspaces')) {
-            throw new ChainedNotAllowException('Chain icon() is only allowed on settings query.');
+            throw new ChainedNotAllowException('Chained method icon() is only allowed on settings and workspaces query.');
         }
 
         $this->query .= 'icon { '.implode(' ', $fields).' } ';
