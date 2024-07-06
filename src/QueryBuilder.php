@@ -10,6 +10,7 @@ use RobinThijsen\LaravelMonday\Classes\MondayDoc;
 use RobinThijsen\LaravelMonday\Classes\MondayIcon;
 use RobinThijsen\LaravelMonday\Classes\MondayWorkspace;
 use RobinThijsen\LaravelMonday\Exceptions\ChainedNotAllowException;
+use RobinThijsen\LaravelMonday\Exceptions\InvalidTokenException;
 
 class QueryBuilder extends LaravelMonday
 {
@@ -333,6 +334,10 @@ class QueryBuilder extends LaravelMonday
         $this->query = substr_replace($this->query, '', -1);
     }
 
+    /**
+     * @return QueryResult
+     * @throws InvalidTokenException
+     */
     public function get(): QueryResult
     {
         $this->end();
