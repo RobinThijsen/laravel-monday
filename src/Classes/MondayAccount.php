@@ -4,7 +4,7 @@ namespace RobinThijsen\LaravelMonday\Classes;
 
 class MondayAccount extends MondayInstance
 {
-    const FIELDS = ["name"];
+    const FIELDS = ['name'];
 
     public string $name;
 

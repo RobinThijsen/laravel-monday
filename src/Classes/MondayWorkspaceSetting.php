@@ -14,7 +14,8 @@ class MondayWorkspaceSetting extends MondayInstance
     {
         parent::__construct();
 
-        foreach ($fields as $key => $value)
+        foreach ($fields as $key => $value) {
             $this->{$key} = new MondayIcon($value);
+        }
     }
 }

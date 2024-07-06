@@ -5,9 +5,10 @@ namespace RobinThijsen\LaravelMonday\Classes;
 class MondayColumn extends MondayInstance
 {
     public const ARGUMENTS = [
-        'ids'           => null,
-        'types'         => null, // ["name", "file", "people", "date", "status"]
+        'ids' => null,
+        'types' => null, // ["name", "file", "people", "date", "status"]
     ];
+
     public const FIELDS = [
         'id',
         'title',
@@ -19,11 +20,17 @@ class MondayColumn extends MondayInstance
     ];
 
     public ?int $id = null;
+
     public ?string $title = null;
+
     public ?string $description = null;
+
     public ?string $type = null;
+
     public ?float $width = null;
+
     public ?bool $archived = null;
+
     public ?array $settings_str = null;
 
     public function __construct(array $fields)
@@ -32,7 +39,7 @@ class MondayColumn extends MondayInstance
 
         foreach ($fields as $key => $value) {
             $this->{$key} = match ($key) {
-                "settings_str" => json_decode($value),
+                'settings_str' => json_decode($value),
                 default => $value,
             };
         }

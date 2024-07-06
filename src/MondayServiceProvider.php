@@ -5,7 +5,6 @@ namespace RobinThijsen\LaravelMonday;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use RobinThijsen\LaravelMonday\Commands\SkeletonCommand;
 
 class MondayServiceProvider extends PackageServiceProvider
 {
@@ -19,7 +18,7 @@ class MondayServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-monday')
             ->hasConfigFile()
-            ->hasInstallCommand(function(InstallCommand $command) {
+            ->hasInstallCommand(function (InstallCommand $command) {
                 $command->publishConfigFile();
             });
     }
