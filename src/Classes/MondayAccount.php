@@ -4,6 +4,7 @@ namespace RobinThijsen\LaravelMonday\Classes;
 
 class MondayAccount extends MondayInstance
 {
+    // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
     const FIELDS = [
         'id',
         'name',
@@ -25,7 +26,7 @@ class MondayAccount extends MondayInstance
         'photo_tiny',
         'photo_thumb',
         'photo_thumb_small',
-//        'teams',
+//        'teams',  // ->teams()
         'url',
     ];
 

@@ -17,11 +17,10 @@ class TestCase extends Orchestra
         parent::setUp();
 
         $queryResult = QueryBuilder::query()
-            ->getWorkspaces()
-            ->ownersSubscribers()
-            ->usersSubscribers()
-            ->settings()
-            ->icon()
+            ->getBoards()
+            ->creator()
+            ->items()
+            ->group()
             ->get();
 
         dd($queryResult);
@@ -36,6 +35,6 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
-        //        config()->set('token', 'TEST_TOKEN_API');
+                config()->set('monday.token', 'eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjM4MDk1MjkxMSwiYWFpIjoxMSwidWlkIjo2MzA5OTc0NywiaWFkIjoiMjAyNC0wNy0wNVQxODoxOTozNS4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MjQyOTI3NjQsInJnbiI6ImV1YzEifQ.wB-EsA9ZDjVhyJRd8p_FaFGFywFiMWy5TPO11Tv0hQE');
     }
 }

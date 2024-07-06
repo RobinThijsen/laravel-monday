@@ -13,6 +13,7 @@ class MondayDoc extends MondayInstance
         'order_by' => null,
     ];
 
+    // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
     public const FIELDS = [
         'id',
         'name',
@@ -22,10 +23,10 @@ class MondayDoc extends MondayInstance
 //        'doc_kind',
         'doc_folder_id',
         'workspace_id',
-        'workspace',  // ->workspace()
-        'created_by', // ->creator()
+//        'workspace',  // ->workspace()
+//        'created_by', // ->creator()
         'created_at',
-        'blocks',     // ->blocks()
+//        'blocks',     // ->blocks()
 //        'settings',
     ];
 

@@ -1,4 +1,5 @@
 <?php
+// TODO BIG3 parent method getItems() and getMe()
 
 namespace RobinThijsen\LaravelMonday;
 
@@ -49,11 +50,7 @@ class QueryBuilder extends LaravelMonday
         $this->query = substr_replace($this->query, ') { ', -2);
 
         // fields
-        foreach ($fields as $field) {
-            if (! in_array($field, ['workspace', 'created_by', 'blocks'])) {
-                $this->query .= "{$field} ";
-            }
-        }
+        $this->query .= implode(" ", $fields) . ' ';
 
         return $this;
     }
@@ -80,11 +77,7 @@ class QueryBuilder extends LaravelMonday
         $this->query = substr_replace($this->query, ') { ', -2);
 
         // fields
-        foreach ($fields as $field) {
-            if (! in_array($field, ['workspace', 'creator', 'owners', 'subscribers', 'columns'])) {
-                $this->query .= "{$field} ";
-            }
-        }
+        $this->query .= implode(" ", $fields) . ' ';
 
         return $this;
     }
@@ -111,11 +104,7 @@ class QueryBuilder extends LaravelMonday
         $this->query = substr_replace($this->query, ') { ', -2);
 
         // fields
-        foreach ($fields as $field) {
-            if (! in_array($field, ['owners_subscribers', 'users_subscribers', 'settings'])) {
-                $this->query .= "{$field} ";
-            }
-        }
+        $this->query .= implode(" ", $fields) . ' ';
 
         return $this;
     }
@@ -185,9 +174,7 @@ class QueryBuilder extends LaravelMonday
         $this->query = substr_replace($this->query, ') { ', -2);
 
         // fields
-        foreach ($fields as $field) {
-            $this->query .= "{$field} ";
-        }
+        $this->query .= implode(" ", $fields) . " ";
 
         return $this;
     }
@@ -336,7 +323,7 @@ class QueryBuilder extends LaravelMonday
             throw new ChainedNotAllowException('Chained method items() is only allowed on boards query.');
         }
 
-        $this->query .= 'items_page { items { '.implode(' ', $fields).' } } ';
+        $this->query .= 'items_page { items { '.implode(' ', $fields).' ';
 
         return $this;
     }
@@ -371,7 +358,7 @@ class QueryBuilder extends LaravelMonday
     public function parentItem(array $fields = MondayItem::FIELDS): self
     {
         if (!str_contains($this->query, 'boards') && !str_contains($this->query, 'items')) {
-            throw new ChainedNotAllowException('Chained method parentItem() is only allowed on boards and items query.');
+            throw new ChainedNotAllowException('Chained method parentItem() is only allowed on items query.');
         }
 
         $this->query .= 'parent_item { '.implode(' ', $fields).' } ';
@@ -390,7 +377,7 @@ class QueryBuilder extends LaravelMonday
     public function subitems(array $fields = MondayItem::FIELDS): self
     {
         if (!str_contains($this->query, 'boards') && !str_contains($this->query, 'items')) {
-            throw new ChainedNotAllowException('Chained method subitems() is only allowed on boards and items query.');
+            throw new ChainedNotAllowException('Chained method subitems() is only allowed on items query.');
         }
 
         $this->query .= 'subitems { '.implode(' ', $fields).' } ';
@@ -409,7 +396,7 @@ class QueryBuilder extends LaravelMonday
     public function group(array $fields = MondayGroup::FIELDS): self
     {
         if (!str_contains($this->query, 'boards') && !str_contains($this->query, 'items')) {
-            throw new ChainedNotAllowException('Chained method group() is only allowed on boards and items query.');
+            throw new ChainedNotAllowException('Chained method group() is only allowed on items query.');
         }
 
         $this->query .= 'group { '.implode(' ', $fields).' } ';

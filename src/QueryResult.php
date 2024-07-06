@@ -16,11 +16,16 @@ class QueryResult
 
     public ?array $errors = null;
 
+    public ?int $countOfOpenBrackets;
+    public ?int $countOfCloseBrackets;
+
     private string $query;
 
     public function __construct(array $result, string $query)
     {
         $this->query = $query;
+        $this->countOfOpenBrackets = substr_count($query, '{');
+        $this->countOfCloseBrackets = substr_count($query, '}');
 
         if (isset($result['docs'])) {
             foreach ($result['docs'] as $doc) {

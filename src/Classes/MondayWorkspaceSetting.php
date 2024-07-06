@@ -4,6 +4,7 @@ namespace RobinThijsen\LaravelMonday\Classes;
 
 class MondayWorkspaceSetting extends MondayInstance
 {
+    // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
     public const FIELDS = [
         'icon',
     ];

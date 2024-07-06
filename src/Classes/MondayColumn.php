@@ -9,6 +9,7 @@ class MondayColumn extends MondayInstance
         'types' => null, // ["name", "file", "people", "date", "status"]
     ];
 
+    // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
     public const FIELDS = [
         'id',
         'title',

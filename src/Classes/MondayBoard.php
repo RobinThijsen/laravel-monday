@@ -14,7 +14,7 @@ class MondayBoard extends MondayInstance
         'state' => 'active', // ['all', 'active', 'archived', 'deleted'];
     ];
 
-    // Commented fields aren't available yet
+    // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
     public const FIELDS = [
         'id',
         'name',
@@ -23,26 +23,26 @@ class MondayBoard extends MondayInstance
         'board_folder_id',
         'board_kind',
         'workspace_id',
-        'workspace',   // ->workspace()
-        'creator',     // ->creator()
-        'owners',      // ->owners()
-        //        'team_owners',
+//        'workspace',   // ->workspace()
+//        'creator',     // ->creator()
+//        'owners',      // ->owners()
+//        'team_owners',
         'url',
-        //        'tags',
+//        'tags',
         'state',
-        //        'views',
-        'subscribers', // ->subscribers()
-        //        'team_subscribers',
-        'columns',     // ->columns()
+//        'views',
+//        'subscribers', // ->subscribers()
+//        'team_subscribers',
+//        'columns',
         'communication',
-                'groups', // ->groups()
+//        'groups', // ->groups()
         'items_count',
-        //        'items_page',  // ->items()
+//        'items_page',  // ->items()
         'item_terminology',
-        'top_group', // ->topGroup()
-        //        'updates',
+//        'top_group', // ->topGroup()
+//        'updates',
         'updated_at',
-        //        'activity_logs',
+//        'activity_logs',
     ];
 
     public ?int $id = null;

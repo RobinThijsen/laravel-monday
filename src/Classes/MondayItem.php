@@ -4,20 +4,20 @@ namespace RobinThijsen\LaravelMonday\Classes;
 
 class MondayItem extends MondayInstance
 {
-    // Commented fields aren't available yet
+    // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
     public const FIELDS = [
         'id',
         'name',
-        'board',
-        'parent_item', // ->parentItem()
-        'subitems', // ->subitems()
+//        'board', // ->board()
+//        'parent_item', // ->parentItem()
+//        'subitems', // ->subitems()
         'url',
         'relative_link',
-        'group', // ->group()
+//        'group', // ->group()
         'email',
         'creator_id',
-        'creator', // ->creator()
-        'subscribers', // ->subscribers()
+//        'creator', // ->creator()
+//        'subscribers', // ->subscribers()
 //        'column_values',
 //        'assets',
         'state',

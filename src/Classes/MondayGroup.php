@@ -8,18 +8,18 @@ class MondayGroup extends MondayInstance
         'ids' => null,
     ];
 
-    // Commented fields aren't available yet
+    // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
     public const FIELDS = [
         'id',
         'title',
         'position',
         'color',
-        'items_page',
+//        'items_page', // ->items()
         'archived',
         'deleted',
     ];
 
-    public ?int $id = null;
+    public ?string $id = null;
     public ?string $title = null;
     public ?int $position = null;
     public ?string $color = null;

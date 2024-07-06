@@ -13,17 +13,18 @@ class MondayWorkspace extends MondayInstance
         'order_by' => null,
     ];
 
+    // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
     public const FIELDS = [
         'id',
         'name',
         'description',
         'state',
         'kind',
-        //        "account_product",
+//        "account_product",
         'is_default_workspace',
-        'owners_subscribers', // ->ownersSubscribers()
-        'users_subscribers',  // ->usersSubscribers()
-        'settings',           // ->settings()->icon()
+//        'owners_subscribers', // ->ownersSubscribers()
+//        'users_subscribers',  // ->usersSubscribers()
+//        'settings',           // ->settings()->icon()
     ];
 
     public ?int $id = null;

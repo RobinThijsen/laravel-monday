@@ -6,7 +6,18 @@ class MondayBlock extends MondayInstance
 {
     const ARGUMENTS = ['limit' => 25, 'page' => 1];
 
-    const FIELDS = ['id', 'doc_id', 'parent_block_id', 'position', 'type', 'content', 'created_at', 'updated_at', 'created_by'];
+    // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
+    const FIELDS = [
+        'id',
+        'doc_id',
+        'parent_block_id',
+        'position',
+        'type',
+        'content',
+        'created_at',
+        'updated_at',
+//        'created_by', // ->creator()
+    ];
 
     public ?string $id = null;
 
