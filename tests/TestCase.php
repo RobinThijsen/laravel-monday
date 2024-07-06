@@ -4,8 +4,8 @@ namespace RobinThijsen\LaravelMonday\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 use RobinThijsen\LaravelMonday\Exceptions\ChainedNotAllowException;
-use RobinThijsen\LaravelMonday\QueryBuilder;
 use RobinThijsen\LaravelMonday\MondayServiceProvider;
+use RobinThijsen\LaravelMonday\QueryBuilder;
 
 class TestCase extends Orchestra
 {
@@ -36,6 +36,6 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
-//        config()->set('token', 'TEST_TOKEN_API');
+        //        config()->set('token', 'TEST_TOKEN_API');
     }
 }

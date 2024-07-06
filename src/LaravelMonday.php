@@ -9,7 +9,8 @@ class LaravelMonday
 {
     private MondayBoard $MondayBoard;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->MondayBoard = new MondayBoard();
         $token = new Token(config('laravelmonday.token'));
         $this->MondayBoard->setToken($token);

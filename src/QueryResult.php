@@ -9,8 +9,11 @@ use RobinThijsen\LaravelMonday\Classes\MondayWorkspace;
 class QueryResult
 {
     public ?array $docs = null;
+
     public ?array $boards = null;
+
     public ?array $workspaces = null;
+
     public ?array $errors = null;
 
     private string $query;
@@ -19,20 +22,27 @@ class QueryResult
     {
         $this->query = $query;
 
-        if (isset($result["docs"]))
-            foreach ($result["docs"] as $doc)
+        if (isset($result['docs'])) {
+            foreach ($result['docs'] as $doc) {
                 $this->docs[] = new MondayDoc($doc);
+            }
+        }
 
-        if (isset($result["boards"]))
-            foreach ($result["boards"] as $board)
+        if (isset($result['boards'])) {
+            foreach ($result['boards'] as $board) {
                 $this->boards[] = new MondayBoard($board);
+            }
+        }
 
-        if (isset($result["workspaces"]))
-            foreach ($result["workspaces"] as $workspace)
+        if (isset($result['workspaces'])) {
+            foreach ($result['workspaces'] as $workspace) {
                 $this->workspaces[] = new MondayWorkspace($workspace);
+            }
+        }
 
-        if (isset($result[0]["message"]) && isset($result[0]["locations"]))
+        if (isset($result[0]['message']) && isset($result[0]['locations'])) {
             $this->errors = $result;
+        }
     }
 
     public function toArray(): array
