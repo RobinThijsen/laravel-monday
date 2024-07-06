@@ -1,9 +1,6 @@
 # A laravel package to easily use Monday.com API
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/laravel-monday.svg?style=flat-square)](https://packagist.org/packages/robinthijsen/laravel-monday)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/robinthijsen/laravel-monday/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/robinthijsen/laravel-monday/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/robinthijsen/laravel-monday/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/robinthijsen/laravel-monday/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/robinthijsen/laravel-monday.svg?style=flat-square)](https://packagist.org/packages/robinthijsen/laravel-monday)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/robinthijsen/laravel-monday.svg?style=flat-square)](https://packagist.org/packages/robinthijsen/laravel-monday)
 <!--delete-->
 ---
 ## Installation
