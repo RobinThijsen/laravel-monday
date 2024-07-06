@@ -1,36 +1,41 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace RobinThijsen\LaravelMonday\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use VendorName\Skeleton\SkeletonServiceProvider;
+use RobinThijsen\LaravelMonday\Exceptions\ChainedNotAllowException;
+use RobinThijsen\LaravelMonday\QueryBuilder;
+use RobinThijsen\LaravelMonday\MondayServiceProvider;
 
 class TestCase extends Orchestra
 {
+    /**
+     * @throws ChainedNotAllowException
+     */
     protected function setUp(): void
     {
         parent::setUp();
 
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'VendorName\\Skeleton\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
+        $queryResult = QueryBuilder::query()
+            ->getWorkspaces()
+            ->ownersSubscribers()
+            ->usersSubscribers()
+            ->settings()
+            ->icon()
+            ->get();
+
+        dd($queryResult);
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            SkeletonServiceProvider::class,
+            MondayServiceProvider::class,
         ];
     }
 
     public function getEnvironmentSetUp($app)
     {
-        config()->set('database.default', 'testing');
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_skeleton_table.php.stub';
-        $migration->up();
-        */
+//        config()->set('token', 'TEST_TOKEN_API');
     }
 }

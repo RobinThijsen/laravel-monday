@@ -1,24 +1,26 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "robinthijsen/laravel-monday",
+    "description": "A Monday API support for Laravel",
     "keywords": [
-        ":vendor_name",
+        "laravel-monday",
         "laravel",
-        ":package_slug"
+        "robinthijsen",
+        "robin",
+        "monday",
+        "api"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Robin Thijsen",
+            "email": "robinthijsen.pro@gmail.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.2",
         "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^10.0||^11.0"
+        "tblack-it/monday-api": "^0.2.4"
     },
     "require-dev": {
         "laravel/pint": "^1.14",
@@ -35,13 +37,12 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "RobinThijsen\\LaravelMonday\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "RobinThijsen\\LaravelMonday\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -73,10 +74,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "MondayServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "Skeleton": "RobinThijsen\\LaravelMonday\\Facades\\LaravelMonday"
             }
         }
     },
