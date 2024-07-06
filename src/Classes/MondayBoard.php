@@ -14,6 +14,7 @@ class MondayBoard extends MondayInstance
         'state' => 'active', // ['all', 'active', 'archived', 'deleted'];
     ];
 
+    // Commented fields aren't available yet
     public const FIELDS = [
         'id',
         'name',
@@ -29,16 +30,16 @@ class MondayBoard extends MondayInstance
         'url',
         //        'tags',
         'state',
-        //        'views',       // ->views()
+        //        'views',
         'subscribers', // ->subscribers()
         //        'team_subscribers',
         'columns',     // ->columns()
         'communication',
-        //        'groups',      // ->groups()
+                'groups', // ->groups()
         'items_count',
         //        'items_page',  // ->items()
         'item_terminology',
-        //        'top_group',   // ->group()
+        'top_group', // ->topGroup()
         //        'updates',
         'updated_at',
         //        'activity_logs',

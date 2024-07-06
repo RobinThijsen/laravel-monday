@@ -7,7 +7,10 @@ use RobinThijsen\LaravelMonday\Classes\MondayBlock;
 use RobinThijsen\LaravelMonday\Classes\MondayBoard;
 use RobinThijsen\LaravelMonday\Classes\MondayColumn;
 use RobinThijsen\LaravelMonday\Classes\MondayDoc;
+use RobinThijsen\LaravelMonday\Classes\MondayGroup;
 use RobinThijsen\LaravelMonday\Classes\MondayIcon;
+use RobinThijsen\LaravelMonday\Classes\MondayItem;
+use RobinThijsen\LaravelMonday\Classes\MondayItemPage;
 use RobinThijsen\LaravelMonday\Classes\MondayWorkspace;
 use RobinThijsen\LaravelMonday\Exceptions\ChainedNotAllowException;
 use RobinThijsen\LaravelMonday\Exceptions\InvalidTokenException;
@@ -196,7 +199,7 @@ class QueryBuilder extends LaravelMonday
      */
     public function creator(array $fields = MondayAccount::FIELDS): self
     {
-        if (str_contains($this->query, 'boards')) {
+        if (str_contains($this->query, 'boards') || str_contains($this->query, 'items')) {
             $this->query .= 'creator { '.implode(' ', $fields).' } ';
         } elseif (str_contains($this->query, 'docs') || str_contains($this->query, 'blocks')) {
             $this->query .= 'created_by { '.implode(' ', $fields).' } ';
@@ -234,8 +237,8 @@ class QueryBuilder extends LaravelMonday
      */
     public function subscribers(array $fields = MondayAccount::FIELDS): self
     {
-        if (! str_contains($this->query, 'boards')) {
-            throw new ChainedNotAllowException('Chained method subscribers() is only allowed on boards query.');
+        if (! str_contains($this->query, 'boards') || ! str_contains($this->query, 'items')) {
+            throw new ChainedNotAllowException('Chained method subscribers() is only allowed on boards and items query.');
         }
 
         $this->query .= 'subscribers { '.implode(' ', $fields).' } ';
@@ -277,6 +280,139 @@ class QueryBuilder extends LaravelMonday
         }
 
         $this->query .= 'workspace { '.implode(' ', $fields).' } ';
+
+        return $this;
+    }
+
+    /**
+     * Build a groups query.
+     * Only available on boards query.
+     *
+     * @param array $fields
+     * @return $this
+     * @throws ChainedNotAllowException
+     */
+    public function groups(array $fields = MondayGroup::FIELDS): self
+    {
+        if (! str_contains($this->query, 'boards')) {
+            throw new ChainedNotAllowException('Chained method groups() is only allowed on boards query.');
+        }
+
+        $this->query .= 'groups { '.implode(' ', $fields).' } ';
+
+        return $this;
+    }
+
+    /**
+     * Build a top_group query.
+     * Only available on boards query.
+     *
+     * @param array $fields
+     * @return $this
+     * @throws ChainedNotAllowException
+     */
+    public function topGroup(array $fields = MondayGroup::FIELDS): self
+    {
+        if (! str_contains($this->query, 'boards')) {
+            throw new ChainedNotAllowException('Chained method topGroup() is only allowed on boards query.');
+        }
+
+        $this->query .= 'top_group { '.implode(' ', $fields).' } ';
+
+        return $this;
+    }
+
+    /**
+     * Build a items query.
+     * Only available on boards query.
+     *
+     * @param array $fields
+     * @return $this
+     * @throws ChainedNotAllowException
+     */
+    public function items(array $fields = MondayItem::FIELDS): self
+    {
+        if (! str_contains($this->query, 'boards')) {
+            throw new ChainedNotAllowException('Chained method items() is only allowed on boards query.');
+        }
+
+        $this->query .= 'items_page { items { '.implode(' ', $fields).' } } ';
+
+        return $this;
+    }
+
+    /**
+     * Build a group query.
+     * Only available on items query.
+     *
+     * @param array $fields
+     * @return $this
+     * @throws ChainedNotAllowException
+     */
+    public function board(array $fields = MondayBoard::FIELDS): self
+    {
+        if (!str_contains($this->query, 'items')) {
+            throw new ChainedNotAllowException('Chained method board() is only allowed on items query.');
+        }
+
+        $this->query .= 'board { ' . implode(' ', $fields) . ' } ';
+
+        return $this;
+    }
+
+    /**
+     * Build a group query.
+     * Only available on items query.
+     *
+     * @param array $fields
+     * @return $this
+     * @throws ChainedNotAllowException
+     */
+    public function parentItem(array $fields = MondayItem::FIELDS): self
+    {
+        if (!str_contains($this->query, 'boards') && !str_contains($this->query, 'items')) {
+            throw new ChainedNotAllowException('Chained method parentItem() is only allowed on boards and items query.');
+        }
+
+        $this->query .= 'parent_item { '.implode(' ', $fields).' } ';
+
+        return $this;
+    }
+
+    /**
+     * Build a group query.
+     * Only available on items query.
+     *
+     * @param array $fields
+     * @return $this
+     * @throws ChainedNotAllowException
+     */
+    public function subitems(array $fields = MondayItem::FIELDS): self
+    {
+        if (!str_contains($this->query, 'boards') && !str_contains($this->query, 'items')) {
+            throw new ChainedNotAllowException('Chained method subitems() is only allowed on boards and items query.');
+        }
+
+        $this->query .= 'subitems { '.implode(' ', $fields).' } ';
+
+        return $this;
+    }
+
+    /**
+     * Build a group query.
+     * Only available on items query.
+     *
+     * @param array $fields
+     * @return $this
+     * @throws ChainedNotAllowException
+     */
+    public function group(array $fields = MondayGroup::FIELDS): self
+    {
+        if (!str_contains($this->query, 'boards') && !str_contains($this->query, 'items')) {
+            throw new ChainedNotAllowException('Chained method group() is only allowed on boards and items query.');
+        }
+
+        $this->query .= 'group { '.implode(' ', $fields).' } ';
 
         return $this;
     }

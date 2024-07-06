@@ -19,14 +19,14 @@ class MondayDoc extends MondayInstance
         'object_id',
         'url',
         'relative_url',
-        'doc_kind',
+//        'doc_kind',
         'doc_folder_id',
         'workspace_id',
         'workspace',  // ->workspace()
         'created_by', // ->creator()
         'created_at',
         'blocks',     // ->blocks()
-        'settings',
+//        'settings',
     ];
 
     public ?int $id = null;
