@@ -74,7 +74,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "MondayServiceProvider"
+                "RobinThijsen\\LaravelMonday\\MondayServiceProvider"
             ],
             "aliases": {
                 "Skeleton": "RobinThijsen\\LaravelMonday\\Facades\\LaravelMonday"
