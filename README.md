@@ -102,7 +102,7 @@ public string $query = ""; // the query generated
 ```
 
 There are some methods to get objects in the BIG4 that should chain or not them. <br/>
-A `ChainedNotAllowException` will be thrown if you try to chain a method that should not be chained with one of the BIG4.
+A `ChainedNotAllowException` will be thrown if you try to chain a method that should not be chained with one of the BIG4. <br/>
 An `InvalidTokenException` will be thrown if you mentionned an invalid token in your `.env` file or if there isn't any.
 
 ## Author
