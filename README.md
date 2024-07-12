@@ -32,7 +32,7 @@ return [
 
 To initialize monday call API this package depends on the [tblack-it/monday-api](https://github.com/Softinthebox/monday-api) package. <br/>
 You need to instantiate a QueryBuilder object with the static method `::query()`. <br/>
-There isn't __construct methods in the QueryBuilder class.
+There isn't `__construct()` methods in the QueryBuilder class. <br/>
 Reason : prettier...
 
 ```php
