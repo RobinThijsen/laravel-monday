@@ -1,8 +1,8 @@
 <?php
 
-namespace RobinThijsen\LaravelMonday\Classes;
+namespace RobinThijsen\LaravelMonday\Objects;
 
-class MondayInstance
+class MondayObject
 {
     public function __construct()
     {

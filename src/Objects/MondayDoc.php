@@ -1,8 +1,8 @@
 <?php
 
-namespace RobinThijsen\LaravelMonday\Classes;
+namespace RobinThijsen\LaravelMonday\Objects;
 
-class MondayDoc extends MondayInstance
+class MondayDoc extends MondayObject
 {
     public const ARGUMENTS = [
         'ids' => null,

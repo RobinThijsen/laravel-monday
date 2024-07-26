@@ -2,9 +2,9 @@
 
 namespace RobinThijsen\LaravelMonday;
 
-use RobinThijsen\LaravelMonday\Classes\MondayBoard;
-use RobinThijsen\LaravelMonday\Classes\MondayDoc;
-use RobinThijsen\LaravelMonday\Classes\MondayWorkspace;
+use RobinThijsen\LaravelMonday\Objects\MondayBoard;
+use RobinThijsen\LaravelMonday\Objects\MondayDoc;
+use RobinThijsen\LaravelMonday\Objects\MondayWorkspace;
 
 class QueryResult
 {
@@ -29,19 +29,25 @@ class QueryResult
 
         if (isset($result['docs'])) {
             foreach ($result['docs'] as $doc) {
-                $this->docs[] = new MondayDoc($doc);
+                if (!is_null($doc)) {
+                    $this->docs[] = new MondayDoc($doc);
+                }
             }
         }
 
         if (isset($result['boards'])) {
             foreach ($result['boards'] as $board) {
-                $this->boards[] = new MondayBoard($board);
+                if (!is_null($board)) {
+                    $this->boards[] = new MondayBoard($board);
+                }
             }
         }
 
         if (isset($result['workspaces'])) {
             foreach ($result['workspaces'] as $workspace) {
-                $this->workspaces[] = new MondayWorkspace($workspace);
+                if (!is_null($workspace)) {
+                    $this->workspaces[] = new MondayWorkspace($workspace);
+                }
             }
         }
 

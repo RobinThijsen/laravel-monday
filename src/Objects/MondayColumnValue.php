@@ -1,8 +1,8 @@
 <?php
 
-namespace RobinThijsen\LaravelMonday\Classes;
+namespace RobinThijsen\LaravelMonday\Objects;
 
-class MondayColumn extends MondayInstance
+class MondayColumnValue extends MondayObject
 {
     public const ARGUMENTS = [
         'ids' => null,
@@ -12,27 +12,21 @@ class MondayColumn extends MondayInstance
     // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
     public const FIELDS = [
         'id',
-        'title',
-        'description',
+        'text',
         'type',
-        'width',
-        'archived',
-        'settings_str',
+//        'column', // ->column()
+        'value',
     ];
 
     public ?int $id = null;
 
-    public ?string $title = null;
-
-    public ?string $description = null;
+    public ?string $text = null;
 
     public ?string $type = null;
 
-    public ?float $width = null;
+    public ?MondayColumn $column = null;
 
-    public ?bool $archived = null;
-
-    public ?array $settings_str = null;
+    public ?array $value = null;
 
     public function __construct(array $fields)
     {
@@ -40,7 +34,8 @@ class MondayColumn extends MondayInstance
 
         foreach ($fields as $key => $value) {
             $this->{$key} = match ($key) {
-                'settings_str' => json_decode($value),
+                'column' => new MondayColumn($value),
+                'value' => json_decode($value),
                 default => $value,
             };
         }

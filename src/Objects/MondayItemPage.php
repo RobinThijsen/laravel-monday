@@ -1,8 +1,8 @@
 <?php
 
-namespace RobinThijsen\LaravelMonday\Classes;
+namespace RobinThijsen\LaravelMonday\Objects;
 
-class MondayItemPage extends MondayInstance
+class MondayItemPage extends MondayObject
 {
     public const ARGUMENTS = [
         'limit' => 25,
@@ -18,6 +18,10 @@ class MondayItemPage extends MondayInstance
     public function __construct(array $fields)
     {
         parent::__construct();
+
+        if (isset($fields['items'])) {
+            $fields = $fields['items'];
+        }
 
         foreach ($fields as $value) {
             $this->items[] = new MondayItem($value);

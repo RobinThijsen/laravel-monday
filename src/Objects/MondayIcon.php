@@ -1,22 +1,25 @@
 <?php
 
-namespace RobinThijsen\LaravelMonday\Classes;
+namespace RobinThijsen\LaravelMonday\Objects;
 
-class MondayWorkspaceSetting extends MondayInstance
+class MondayIcon extends MondayObject
 {
     // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
     public const FIELDS = [
-        'icon',
+        'color',
+        'image',
     ];
 
-    public ?MondayIcon $icon = null;
+    public ?string $color = null;
+
+    public ?string $image = null;
 
     public function __construct(array $fields)
     {
         parent::__construct();
 
         foreach ($fields as $key => $value) {
-            $this->{$key} = new MondayIcon($value);
+            $this->{$key} = $value;
         }
     }
 }

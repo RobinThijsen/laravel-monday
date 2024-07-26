@@ -1,9 +1,17 @@
 <?php
 
-namespace RobinThijsen\LaravelMonday\Classes;
+namespace RobinThijsen\LaravelMonday\Objects;
 
-class MondayItem extends MondayInstance
+class MondayItem extends MondayObject
 {
+    public const ARGUMENTS = [
+        'ids' => null,
+        'limit' => 25,
+        'page' => 1,
+        'newest_first' => null,
+        'exclude_nonactive' => null,
+    ];
+
     // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
     public const FIELDS = [
         'id',

@@ -3,16 +3,17 @@
 
 namespace RobinThijsen\LaravelMonday;
 
-use RobinThijsen\LaravelMonday\Classes\MondayAccount;
-use RobinThijsen\LaravelMonday\Classes\MondayBlock;
-use RobinThijsen\LaravelMonday\Classes\MondayBoard;
-use RobinThijsen\LaravelMonday\Classes\MondayColumn;
-use RobinThijsen\LaravelMonday\Classes\MondayDoc;
-use RobinThijsen\LaravelMonday\Classes\MondayGroup;
-use RobinThijsen\LaravelMonday\Classes\MondayIcon;
-use RobinThijsen\LaravelMonday\Classes\MondayItem;
-use RobinThijsen\LaravelMonday\Classes\MondayItemPage;
-use RobinThijsen\LaravelMonday\Classes\MondayWorkspace;
+use RobinThijsen\LaravelMonday\Objects\MondayAccount;
+use RobinThijsen\LaravelMonday\Objects\MondayBlock;
+use RobinThijsen\LaravelMonday\Objects\MondayBoard;
+use RobinThijsen\LaravelMonday\Objects\MondayColumn;
+use RobinThijsen\LaravelMonday\Objects\MondayColumnValue;
+use RobinThijsen\LaravelMonday\Objects\MondayDoc;
+use RobinThijsen\LaravelMonday\Objects\MondayGroup;
+use RobinThijsen\LaravelMonday\Objects\MondayIcon;
+use RobinThijsen\LaravelMonday\Objects\MondayItem;
+use RobinThijsen\LaravelMonday\Objects\MondayItemPage;
+use RobinThijsen\LaravelMonday\Objects\MondayWorkspace;
 use RobinThijsen\LaravelMonday\Exceptions\ChainedNotAllowException;
 use RobinThijsen\LaravelMonday\Exceptions\InvalidTokenException;
 
@@ -29,18 +30,18 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Init a doc(s) query.
-     * See list of fields available in the Doc Model
+     * Init a doc(s) query.<br/>
+     * See list of fields available in the Doc Model<br/>
      * See list of attributes available in the Doc Model
      *
      * @return $this
      */
-    public function getDocs(array|string $attributes = MondayDoc::ARGUMENTS, array|string $fields = MondayDoc::FIELDS): self
+    public function getDocs(array|string $arguments = MondayDoc::ARGUMENTS, array|string $fields = MondayDoc::FIELDS): self
     {
         $this->query = 'docs (';
 
         // attributes
-        foreach ($attributes as $key => $value) {
+        foreach ($arguments as $key => $value) {
             if (! is_null($value)) {
                 $this->query .= "{$key}: {$value}, ";
             }
@@ -56,18 +57,18 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Init a boards(s) query.
-     * See list of fields available in the Board Model
+     * Init a boards(s) query.<br/>
+     * See list of fields available in the Board Model<br/>
      * See list of attributes available in the Board Model
      *
      * @return $this
      */
-    public function getBoards(array|string $attributes = MondayBoard::ARGUMENTS, array|string $fields = MondayBoard::FIELDS): self
+    public function getBoards(array|string $arguments = MondayBoard::ARGUMENTS, array|string $fields = MondayBoard::FIELDS): self
     {
         $this->query = 'boards (';
 
         // attributes
-        foreach ($attributes as $key => $value) {
+        foreach ($arguments as $key => $value) {
             if (! is_null($value)) {
                 $this->query .= "{$key}: {$value}, ";
             }
@@ -83,18 +84,18 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Init a workspaces(s) query.
-     * See list of fields available in the Workspace Model
+     * Init a workspaces(s) query.<br/>
+     * See list of fields available in the Workspace Model<br/>
      * See list of attributes available in the Workspace Model
      *
      * @return $this
      */
-    public function getWorkspaces(array|string $attributes = MondayWorkspace::ARGUMENTS, array|string $fields = MondayWorkspace::FIELDS): self
+    public function getWorkspaces(array|string $arguments = MondayWorkspace::ARGUMENTS, array|string $fields = MondayWorkspace::FIELDS): self
     {
         $this->query = 'workspaces (';
 
         // attributes
-        foreach ($attributes as $key => $value) {
+        foreach ($arguments as $key => $value) {
             if (! is_null($value)) {
                 $this->query .= "{$key}: {$value}, ";
             }
@@ -110,7 +111,36 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a owners_subscribers query.
+     * Init a items(s) query. <br/>
+     * See list of fields available in the Item Model <br/>
+     * See list of attributes available in the Item Model
+     *
+     * @param array $arguments
+     * @param array $fields
+     * @return $this
+     */
+    public function getItems(array $arguments = MondayItem::ARGUMENTS, array $fields = MondayItem::FIELDS): self
+    {
+        $this->query = 'items (';
+
+        // attributes
+        foreach ($arguments as $key => $value) {
+            if (! is_null($value)) {
+                $this->query .= "{$key}: {$value}, ";
+            }
+        }
+
+        // remove last ", "
+        $this->query = substr_replace($this->query, ') { ', -2);
+
+        // fields
+        $this->query .= implode(" ", $fields) . ' ';
+
+        return $this;
+    }
+
+    /**
+     * Build a owners_subscribers query.<br/>
      * Only available on workspaces query.
      *
      * @return $this
@@ -129,7 +159,7 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a users_subscribers query.
+     * Build a users_subscribers query.<br/>
      * Only available on workspaces query.
      *
      * @return $this
@@ -148,14 +178,14 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a blocks query.
+     * Build a blocks query.<br/>
      * Only available on docs query.
      *
      * @return $this
      *
      * @throws ChainedNotAllowException
      */
-    public function blocks(array|string $attributes = MondayBlock::ARGUMENTS, array|string $fields = MondayBlock::FIELDS): self
+    public function blocks(array|string $arguments = MondayBlock::ARGUMENTS, array|string $fields = MondayBlock::FIELDS): self
     {
         if (! str_contains($this->query, 'docs')) {
             throw new ChainedNotAllowException('Chained method blocks() is only allowed on docs query.');
@@ -164,7 +194,7 @@ class QueryBuilder extends LaravelMonday
         $this->query .= 'blocks (';
 
         // attributes
-        foreach ($attributes as $key => $value) {
+        foreach ($arguments as $key => $value) {
             if (! is_null($value)) {
                 $this->query .= "{$key}: {$value}, ";
             }
@@ -196,7 +226,7 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build an owners query.
+     * Build an owners query.<br/>
      * Only available on boards query.
      *
      * @return $this
@@ -215,7 +245,7 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a subscribers query.
+     * Build a subscribers query.<br/>
      * Only available on boards query.
      *
      * @return $this
@@ -234,7 +264,7 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a columns query.
+     * Build a columns query.<br/>
      * Only available on boards query.
      *
      * @return $this
@@ -253,7 +283,54 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a workspace query.
+     * Build a column_values query.<br/>
+     * Only available on items query.
+     *
+     * @param array $arguments
+     * @param array $fields
+     * @return $this
+     * @throws ChainedNotAllowException
+     */
+    public function columnValues(array $arguments = MondayColumnValue::ARGUMENTS, array $fields = MondayColumnValue::FIELDS): self
+    {
+        if (! str_contains($this->query, 'items')) {
+            throw new ChainedNotAllowException('Chained method columnValues() is only allowed on items query.');
+        }
+
+        $this->query .= 'column_values ';
+
+        if (!empty($arguments)) {
+            $this->query .= "(";
+
+            foreach ($arguments as $key => $value) {
+                if (!is_null($value)) {
+                    $this->query .= "{$key}: ";
+                    if (is_array($value)) {
+                        if ($key == "ids") {
+                            $this->query .= "{$key}: [" . '"' . implode('", "', $value) . '"' . "], ";
+                        } else {
+                            $this->query .= "{$key}: [" . implode(", ", $value) . "], ";
+                        }
+                    } else {
+                        if ($key == "ids") {
+                            $this->query .= $key . ': "' . $value . '", ';
+                        } else {
+                            $this->query .= "{$key}: {$value}";
+                        }
+                    }
+                }
+            }
+
+            $this->query = substr_replace($this->query, ") { ", -2);
+        }
+
+        $this->query .= implode(" ", $fields) . ' ';
+
+        return $this;
+    }
+
+    /**
+     * Build a workspace query.<br/>
      * Only available on boards and docs query.
      *
      * @return $this
@@ -272,26 +349,42 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a groups query.
+     * Build a groups query.<br/>
      * Only available on boards query.
      *
      * @param array $fields
      * @return $this
      * @throws ChainedNotAllowException
      */
-    public function groups(array $fields = MondayGroup::FIELDS): self
+    public function groups(array|string $ids = null, array $fields = MondayGroup::FIELDS): self
     {
         if (! str_contains($this->query, 'boards')) {
             throw new ChainedNotAllowException('Chained method groups() is only allowed on boards query.');
         }
 
-        $this->query .= 'groups { '.implode(' ', $fields).' } ';
+        $this->query .= "groups ";
+
+        if (! is_null($ids)) {
+            $this->query .= "(ids: ";
+
+            foreach ($ids as $id) {
+                if (!is_null($id)) {
+                    $this->query .= '"'.$id.'", ';
+                }
+            }
+
+            $this->query = substr_replace($this->query, ") { ", -2);
+        } else {
+            $this->query .= "{ ";
+        }
+
+        $this->query .= implode(' ', $fields) . ' ';
 
         return $this;
     }
 
     /**
-     * Build a top_group query.
+     * Build a top_group query.<br/>
      * Only available on boards query.
      *
      * @param array $fields
@@ -310,7 +403,7 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a items query.
+     * Build a items query.<br/>
      * Only available on boards query.
      *
      * @param array $fields
@@ -329,7 +422,7 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a group query.
+     * Build a group query.<br/>
      * Only available on items query.
      *
      * @param array $fields
@@ -348,7 +441,7 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a group query.
+     * Build a group query.<br/>
      * Only available on items query.
      *
      * @param array $fields
@@ -367,7 +460,7 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a group query.
+     * Build a group query.<br/>
      * Only available on items query.
      *
      * @param array $fields
@@ -386,7 +479,7 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a group query.
+     * Build a group query.<br/>
      * Only available on items query.
      *
      * @param array $fields
@@ -405,7 +498,7 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a settings query.
+     * Build a settings query.<br/>
      * Only available on workspaces query.
      *
      * @return $this
@@ -424,7 +517,7 @@ class QueryBuilder extends LaravelMonday
     }
 
     /**
-     * Build a icon query.
+     * Build a icon query.<br/>
      * Only available on settings query.
      *
      * @return $this
@@ -464,7 +557,7 @@ class QueryBuilder extends LaravelMonday
     public function get(): QueryResult
     {
         $this->end();
-
+        dd($this->query);
         return parent::queryResult($this->query);
     }
 }

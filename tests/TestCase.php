@@ -4,6 +4,7 @@ namespace RobinThijsen\LaravelMonday\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 use RobinThijsen\LaravelMonday\Exceptions\ChainedNotAllowException;
+use RobinThijsen\LaravelMonday\Exceptions\InvalidTokenException;
 use RobinThijsen\LaravelMonday\MondayServiceProvider;
 use RobinThijsen\LaravelMonday\QueryBuilder;
 
@@ -11,16 +12,16 @@ class TestCase extends Orchestra
 {
     /**
      * @throws ChainedNotAllowException
+     * @throws InvalidTokenException
      */
     protected function setUp(): void
     {
         parent::setUp();
 
         $queryResult = QueryBuilder::query()
-            ->getBoards()
+            ->getItems()
             ->creator()
-            ->items()
-            ->group()
+            ->columnValues()
             ->get();
 
         dd($queryResult);

@@ -1,8 +1,8 @@
 <?php
 
-namespace RobinThijsen\LaravelMonday\Classes;
+namespace RobinThijsen\LaravelMonday\Objects;
 
-class MondayAccount extends MondayInstance
+class MondayAccount extends MondayObject
 {
     // Commented fields aren't available in the fields array and should be added with the method indicated in the comment if available.
     const FIELDS = [
@@ -29,8 +29,7 @@ class MondayAccount extends MondayInstance
 //        'teams',  // ->teams()
         'url',
     ];
-
-
+    
     public ?int $id = null;
     public ?string $name = null;
     public ?string $title = null;

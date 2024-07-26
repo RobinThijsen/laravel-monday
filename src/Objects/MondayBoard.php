@@ -1,8 +1,8 @@
 <?php
 
-namespace RobinThijsen\LaravelMonday\Classes;
+namespace RobinThijsen\LaravelMonday\Objects;
 
-class MondayBoard extends MondayInstance
+class MondayBoard extends MondayObject
 {
     public const ARGUMENTS = [
         'ids' => null,
@@ -110,9 +110,14 @@ class MondayBoard extends MondayInstance
                         $this->groups[] = new MondayGroup($group);
                     }
                     break;
+                case 'columns':
+                    foreach ($value as $column) {
+                        $this->columns[] = new MondayColumn($column);
+                    }
+                    break;
                 case 'subscribers':
                     foreach ($value as $subscriber) {
-                        $this->groups[] = new MondayAccount($subscriber);
+                        $this->subscribers[] = new MondayAccount($subscriber);
                     }
                     break;
                 case 'items_page':

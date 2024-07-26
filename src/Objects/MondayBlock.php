@@ -1,8 +1,8 @@
 <?php
 
-namespace RobinThijsen\LaravelMonday\Classes;
+namespace RobinThijsen\LaravelMonday\Objects;
 
-class MondayBlock extends MondayInstance
+class MondayBlock extends MondayObject
 {
     const ARGUMENTS = ['limit' => 25, 'page' => 1];
 
