@@ -2,10 +2,10 @@
 
 namespace RobinThijsen\LaravelMonday\Exceptions;
 
-class ChainedNotAllowException extends \Exception
+class InvalidFieldException extends \Exception
 {
     public function __construct($message = null)
     {
-        parent::__construct($message, 405);
+        parent::__construct($message, 500);
     }
 }

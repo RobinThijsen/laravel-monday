@@ -4,6 +4,8 @@
 <!--delete-->
 ---
 ## Installation
+This is a Laravel package to easily use the Monday.com API. <br/>
+You can also use it in vanilla PHP.
 
 First install the package via composer:
 
@@ -25,85 +27,117 @@ You should define your monday.com API token in the `.env` file.
 ```php
 return [
     'token' => env('MONDAY_API_TOKEN'),
+    'version' => env('MONDAY_API_VERSION', '2024-04'),
 ];
 ```
 
 ## Usage
 
-To initialize monday call API this package depends on the [tblack-it/monday-api](https://github.com/Softinthebox/monday-api) package. <br/>
-You need to instantiate a QueryBuilder object with the static method `::query()`. <br/>
-There isn't `__construct()` methods in the QueryBuilder class. <br/>
-Reason : prettier...
+Before starting to use the package, you should get your API token from [Monday.com](https://monday.com/) <br/>
+and look about the documentation of monday object on the [Monday.com API documentation](https://monday.com/developers/v2).
+
+Okay, let's start using the package. <br/>
+If you know a bit about dynamic classes and props, this package work this way. <br/>
 
 ```php
-use RobinThijsen\LaravelMonday\QueryBuilder
-
-$queryResult = QueryBuilder::query();
+# This is a list of every Monday object you can use in this package
+# Or find them in the src/Objects directory
+use \RobinThijsen\LaravelMonday\Objects\Account;
+use \RobinThijsen\LaravelMonday\Objects\AccountProduct;
+use \RobinThijsen\LaravelMonday\Objects\Block;
+use \RobinThijsen\LaravelMonday\Objects\Board;
+use \RobinThijsen\LaravelMonday\Objects\Column;
+use \RobinThijsen\LaravelMonday\Objects\ColumnValue;
+use \RobinThijsen\LaravelMonday\Objects\Doc;
+use \RobinThijsen\LaravelMonday\Objects\Group;
+use \RobinThijsen\LaravelMonday\Objects\Icon;
+use \RobinThijsen\LaravelMonday\Objects\Item;
+use \RobinThijsen\LaravelMonday\Objects\Plan;
+use \RobinThijsen\LaravelMonday\Objects\Team;
+use \RobinThijsen\LaravelMonday\Objects\User;
+use \RobinThijsen\LaravelMonday\Objects\Workspace;
+use \RobinThijsen\LaravelMonday\Objects\WorkspaceSetting;
 ```
 
-You can start building your query on chaining methods on the `::query()` one.
+You can start a query builder by calling the `::query()` or `::find()` method on the object you want to query (If the object doesn't accept querying and unique querying, an Exception will be thrown). <br/>
 
 ```php
-use RobinThijsen\LaravelMonday\QueryBuilder
+use \RobinThijsen\LaravelMonday\Objects\Board;
 
-$queryResult = QueryBuilder::query()
-    ->getBoards()     // get boards depending on the arguments and the fields specify
-    ->columns()       // get columns of the boards
-    ->items()         // get items of the boards
-    ->columnValues(); // get the items column values
+# This is an example of querying all the boards
+# The following params are for Board object
+# Check params for other objects in the src/Objects directory
+/**
+* @param int|array|null $ids => default null
+ * @param int|array|null $workspaceIds => default null
+ * @param int $limit => default 25
+ * @param int $page => default 1
+ * @param string $kind => default BoardKind::PUBLIC
+ * @param string $state => default State::ACTIVE
+ * @return \RobinThijsen\LaravelMonday\Objects\Board[]
+ */
+$boards = Board::query();
 ```
 
-Most of the methods are taking 2 optional arguments : `array|string $arguments` and `array|string $fields` <br/>
-Sometimes, there aren't any arguments depending on the monday.com API.
+`::query()` and `::find()` accept dynamic arguments depending on the object you are querying. <br/>
 
-## BIG 4
-
-You need to always start your query (after `::query()`) with `the BIG4 (getDocs, getBoards, getWorkspaces, getItems)` methods. <br/>
-Theses 4 methods are the main one. They define what ur looking for in the API. <br/>
-You can pass an array of fields and arguments to get the data you want.
+Then, you can chain the query builder with the following methods: `->with()` and `->withObject()` <br/>
 
 ```php
-    public function getDocs(array|string $attributes = MondayDoc::ARGUMENTS, array|string $fields = MondayDoc::FIELDS): self {...}
+use \RobinThijsen\LaravelMonday\Objects\Board;
+use \RobinThijsen\LaravelMonday\Objects\Item;
 
-    public function getBoards(array|string $attributes = MondayBoard::ARGUMENTS, array|string $fields = MondayBoard::FIELDS): self {...}
-
-    public function getWorkspaces(array|string $attributes = MondayWorkspace::ARGUMENTS, array|string $fields = MondayWorkspace::FIELDS): self {...}
-
-    public function getItems(array|string $attributes = MondayItem::ARGUMENTS, array|string $fields = MondayItem::FIELDS): self {...}
+# This is an example of querying all the boards with the items
+$boards = Board::query()
+    ->with('id', 'name')
+    ->withObject(Item::class, [], ['id', 'name']);
 ```
-
-To see all the available fields, arguments and methods available, you can check the MondayObject in the package or go to the [monday.com API documentation](https://developer.monday.com/api-reference/reference/docs)
-
-When you are done building your query, you need to close it. <br/>
-For that you should call the `->get()` method;
+```php
+/**
+ * FieldsName are the fields you want to get from the object
+ * If the field is not in the object or if it is an object field, an Exception will be thrown
+ * 
+ * @param string ...$fieldNames
+ */
+public function with(...$fieldNames)
+```
+```php
+/**
+ * Get an object with the given field names
+ * 
+ * @param string $fieldName
+ * @param array|Closure $params
+ * @param array $fields
+ */
+public function withObject($fieldName, $params = [], $fields = [])
+```
+To call object of object, you need to use the withObject method. <br/>
+but with a Closure method replacing param $params. <br/>
 
 ```php
-use RobinThijsen\LaravelMonday\QueryBuilder
+use \RobinThijsen\LaravelMonday\Objects\Board;
+use \RobinThijsen\LaravelMonday\Objects\Item;
+use \RobinThijsen\LaravelMonday\Objects\ColumnValue;
 
-$queryResult = QueryBuilder::query()
-    ->getBoards()
-    ->items()
-    ->columnValues()
-    ->get(); // return an QueryResult object
-```
+// In this exemple, I recover the board with id 123456
+// with all is items and all the column values of each item with specific default fields for each object
+$board = Board::find(123456)
+    ->with('id', 'name')
+    ->withObject(Item::class, function ($builder) {
+        $builder->with('id', 'name')
+        ->withObject(ColumnValue::class, [], ['text', 'value']);
+    });
+````
 
-This will return you a QueryResult Object with :
+When your query is ready, you can call the `->get()` method to get the results. <br/>
 
 ```php
-public ?array $boards = null;     // array of MondayBoard instance
-public ?array $docs = null;       // array of MondayDoc instance
-public ?array $workspaces = null; // array of MondayWorkspace instance
-public ?array $items = null;      // array of MondayItem instance
-public ?array $errors = null;     // array of errors send by monday.com API
-
-public ?int $countOfOpenBrackets;
-public ?int $countOfCloseBrackets;
-public string $query = ""; // the query generated
+// This will return you an instance of Board class with asked fields as props
+// For this exemple, it will be id and name
+$board = Board::find(123456)
+    ->with('id', 'name')
+    ->get();
 ```
-
-There are some methods to get objects in the BIG4 that should chain or not them. <br/>
-A `ChainedNotAllowException` will be thrown if you try to chain a method that should not be chained with one of the BIG4. <br/>
-An `InvalidTokenException` will be thrown if you mentionned an invalid token in your `.env` file or if there isn't any.
 
 ## Author
 
