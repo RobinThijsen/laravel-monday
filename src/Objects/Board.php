@@ -29,6 +29,7 @@ class Board extends Builder
         'id',
         'item_terminology',
         'items_count',
+        'name',
         'permissions',
         'state',
         'tags',
