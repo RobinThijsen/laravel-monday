@@ -42,6 +42,7 @@ class Board extends Builder
         'columns',
         'groups',
         'items_page',
+        'items',
         'owners',
         'team_owners',
         'team_subscribers',
