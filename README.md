@@ -120,7 +120,7 @@ use \RobinThijsen\LaravelMonday\Objects\Item;
 use \RobinThijsen\LaravelMonday\Objects\ColumnValue;
 
 // In this exemple, I recover the board with id 123456
-// with all is items and all the column values of each item with specific default fields for each object
+// with all his items and all the column values of each item with specific default fields for each object
 $board = Board::find(123456)
     ->with('id', 'name')
     ->withObject(Item::class, function ($builder) {
